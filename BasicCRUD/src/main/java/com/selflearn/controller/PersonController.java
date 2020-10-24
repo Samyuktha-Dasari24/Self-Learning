@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.selflearn.model.Person;
 import com.selflearn.service.PersonsService;
-
+/**
+ * @author SONY
+ *
+ */
 //mark class as Controller
 @RestController
 public class PersonController {
@@ -29,20 +32,20 @@ public class PersonController {
 
 //creating a get mapping that retrieves the detail of a specific person
 	@GetMapping("/person/{personId}")
-	private Person getperson(@PathVariable("personId") int personId) {
+	private Person getperson(@PathVariable("personId") Long personId) {
 		return personsService.getpersonById(personId);
 	}
 
 //creating a delete mapping that deletes a specified person
 	@DeleteMapping("/person/{personId}")
-	private void deletePerson(@PathVariable("personId") int personId) {
+	private void deletePerson(@PathVariable("personId") Long personId) {
 		personsService.delete(personId);
 	}
 
 //creating post mapping that post the person detail in the database
 	//http://localhost:8080/personIds
 	@PostMapping("/personIds")
-	private int savePerson(@RequestBody Person person) {
+	private Long savePerson(@RequestBody Person person) {
 		personsService.saveOrUpdate(person);
 		return person.getId();
 	}
@@ -53,4 +56,10 @@ public class PersonController {
 		personsService.saveOrUpdate(person);
 		return person;
 	}
+	
+	//creating a get mapping that retrieves the detail of a specific person
+		@GetMapping("/personcount")
+		private long getpersonCount() {
+			return personsService.getCount();
+		}
 }
