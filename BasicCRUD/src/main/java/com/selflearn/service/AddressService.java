@@ -28,8 +28,9 @@ public class AddressService {
 		}
 
 	// saving a specific record by using the method save() of JPARepository
-	public void saveOrUpdate(Address address) {
-		addressRepository.save(address);
+	public Address saveOrUpdate(Address address) {
+		Address updatedAddress = addressRepository.save(address);
+		return updatedAddress;
 	}
 
 	// deleting a specific record by using the method deleteById() of JPARepository
@@ -45,9 +46,4 @@ public class AddressService {
 			System.out.println("No address with id is found");
 		}
 			}
-	//updating a record
-		public void update(Address address, long address_id) {
-			addressRepository.save(address);
-		}
-
 }
