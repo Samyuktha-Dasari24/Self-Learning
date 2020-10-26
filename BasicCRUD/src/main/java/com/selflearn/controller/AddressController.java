@@ -33,20 +33,19 @@ public class AddressController {
 
 	// http://localhost:8080/address
 	@GetMapping("/address")
-	private List<Address> getAllAddress() {
+	public List<Address> getAllAddress() {
 		return addressService.getAllAddress();
 	}
 
 	// creating post mapping that post the address detail in the database
 	// http://localhost:8080/addressIds
 	@PostMapping("/saveAddress/{person_id}")
-	private String saveAddress(@RequestBody Address address, @PathVariable long person_id) {
+	public String saveAddress(@RequestBody Address address, @PathVariable long person_id) {
 		String result = null;
+		Address returnedAddress = saveOrEditAddress(address, person_id);
 		try {
-			Person person = personsService.getpersonById(person_id);
-			 if(person != null) {
-				address.setPerson(person);
-				addressService.saveOrUpdate(address);
+			 if(returnedAddress.getPerson() != null) {
+				addressService.saveOrUpdate(returnedAddress);
 				result = "Successfully added address to Person";
 			}else {
 				result = "No person with particular id";
@@ -59,16 +58,39 @@ public class AddressController {
 	}
 
 	// creating put mapping that updates the address detail
-	@PutMapping("/updateaddress")
-	private Address update(@RequestBody Address address) {
-		addressService.saveOrUpdate(address);
-		return address;
+	@PutMapping("/editaddress/{person_id}")
+	public Address editAddress(@RequestBody Address address, @PathVariable long person_id) {
+		Address updatedAddress = null;
+		Address returnedAddress = saveOrEditAddress(address, person_id);
+		try {
+			 if(returnedAddress.getPerson() != null) {
+				 updatedAddress = addressService.saveOrUpdate(returnedAddress);
+				System.out.println("Successfully added address to Person");
+			}else {
+				System.out.println("No person with particular id");
+			}
+		}catch (Exception ex){
+           ex.printStackTrace();
+           System.out.println(ex.getMessage());
+       }
+		return updatedAddress;
 	}
 
 	// creating a delete mapping that deletes a specified address
 	@DeleteMapping("/address/{address_id}")
-	private void deleteAddress(@PathVariable("address_id") Long address_id) {
+	public void deleteAddress(@PathVariable("address_id") Long address_id) {
 		addressService.delete(address_id);
+	}
+	
+	private Address saveOrEditAddress(Address address, long person_id) {
+			Person person = personsService.getpersonById(person_id);
+			 if(person != null) {
+				address.setPerson(person);
+				}
+			 else {
+				 System.out.println("Cannot Add Address to DB");
+			 }
+			return address;		
 	}
 
 }
