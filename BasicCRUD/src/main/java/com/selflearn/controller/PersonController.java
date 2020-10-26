@@ -26,40 +26,40 @@ public class PersonController {
 //creating a get mapping that retrieves all the people detail from the database
 	//http://localhost:8080/person
 	@GetMapping("/person")
-	private List<Person> getAllPersons() {
+	public List<Person> getAllPersons() {
 		return personsService.getAllPersons();
 	}
 
 //creating a get mapping that retrieves the detail of a specific person
 	@GetMapping("/person/{personId}")
-	private Person getperson(@PathVariable("personId") Long personId) {
+	public Person getperson(@PathVariable("personId") Long personId) {
 		return personsService.getpersonById(personId);
 	}
 
 //creating a delete mapping that deletes a specified person
 	@DeleteMapping("/person/{personId}")
-	private void deletePerson(@PathVariable("personId") Long personId) {
+	public void deletePerson(@PathVariable("personId") Long personId) {
 		personsService.delete(personId);
 	}
 
 //creating post mapping that post the person detail in the database
 	//http://localhost:8080/personIds
 	@PostMapping("/personIds")
-	private Long savePerson(@RequestBody Person person) {
+	public Long savePerson(@RequestBody Person person) {
 		personsService.saveOrUpdate(person);
 		return person.getId();
 	}
 
 //creating put mapping that updates the person detail 
 	@PutMapping("/persons")
-	private Person update(@RequestBody Person person) {
+	public Person update(@RequestBody Person person) {
 		personsService.saveOrUpdate(person);
 		return person;
 	}
 	
 	//creating a get mapping that retrieves the detail of a specific person
 		@GetMapping("/personcount")
-		private long getpersonCount() {
+		public long getpersonCount() {
 			return personsService.getCount();
 		}
 }
