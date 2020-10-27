@@ -3,6 +3,8 @@ package com.selflearn;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,12 +22,15 @@ public class SpringBootCrudOperationApplication implements CommandLineRunner{
 	@Autowired
 	private PersonRepository personRepository;
 
+	private static final Logger logger = LoggerFactory.getLogger(SpringBootCrudOperationApplication.class);
+	
 	public static void main(String[] args) {
 
 		SpringApplication.run(SpringBootCrudOperationApplication.class, args);
 	}
 	@Override
 	public void run(String... args) throws Exception {
+		logger.info("In Overriden run method");
 	    //Bi-directional mapping
 	  Person person1 = new Person();
 	  person1.setFirstName("Sam");
@@ -50,11 +55,7 @@ public class SpringBootCrudOperationApplication implements CommandLineRunner{
 	  addressLst.add(address);
 	  addressLst.add(address1);
 	  person1.setAddressList(addressLst);
-//	  person1.getAddressList().add(address);
-//	  person1.getAddressList().add(address1);
 	  Person retPerson = personRepository.save(person1);
-	  System.out.println(retPerson.getId());
-	  //Get the list of Addresss from Person
-	  Person person = personRepository.findPersonById(retPerson.getId());
+	  logger.info("Persisted first person details" +retPerson.getId());
 }
 }
