@@ -9,6 +9,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -62,10 +64,13 @@ public class SpringBootCrudOperationApplicationTests {
 	void contextLoads() {
 
 	}
+	
+	private static final Logger logger = LoggerFactory.getLogger(SpringBootCrudOperationApplicationTests.class);
 
 	// Get all addresses
 	@Test
 	public void testGetAllAddress() {
+		logger.info("testGetAllAddress");
 		List<Address> addressLst = new ArrayList<>();
 		addressLst = addressController.getAllAddress();
 		assertEquals(3, addressLst.size());
@@ -74,6 +79,7 @@ public class SpringBootCrudOperationApplicationTests {
 	// Save Address when Person is available in DB
 	@Test
 	public void testSavaAddressWithPerson() {
+		logger.info("testSavaAddressWithPerson");
 		Address address = new Address();
 		address.setAddress_id(104l);
 		address.setCity("HYD");
@@ -95,6 +101,7 @@ public class SpringBootCrudOperationApplicationTests {
 	// Person is not available in DB
 	@Test
 	public void testSavaAddressWithoutPerson() {
+		logger.info("testSavaAddressWithoutPerson");
 		Address address = new Address();
 		address.setAddress_id(104l);
 		address.setCity("HYD");
@@ -108,6 +115,7 @@ public class SpringBootCrudOperationApplicationTests {
 	// Update existing Address
 	@Test
 	public void testEditAddressWithPerson() {
+		logger.info("testEditAddressWithPerson");
 		Address address = new Address();
 		address.setAddress_id(104l);
 		address.setCity("HYD");
@@ -121,26 +129,30 @@ public class SpringBootCrudOperationApplicationTests {
 	// Delete Address which is not present in DB
 	@Test
 	public void testDeleteAddress() {
+		logger.info("testDeleteAddress");
 		addressController.deleteAddress(105l);
 	}
 
 	@Test
 	public void testGetAllPersons() {
+		logger.info("testGetAllPersons");
 		List<Person> personLst = personController.getAllPersons();
 		for (Person person : personLst) {
-			System.out.println("Person Id: " +person.getId()+ " " + "person First name: " + person.getFirstName()+ "Person Last Name: " +person.getLastName());
+			logger.debug("Person Id: " +person.getId()+ " " + "person First name: " + person.getFirstName()+ "Person Last Name: " +person.getLastName());
 		}
 		assertEquals("Sam", personLst.get(0).getFirstName());
 	}
 
 	@Test
 	public void testGetPersonCount() {
+		logger.info("testGetPersonCount()");
 		Long count = personController.getpersonCount();
 		assertEquals(14l, count);
 	}
 
 	@Test
 	public void testSavePerson() {
+		logger.info("testSavePerson()");
 		Person person1 = new Person();
 		person1.setFirstName("Thomas");
 		person1.setLastName("Grey");
@@ -150,21 +162,24 @@ public class SpringBootCrudOperationApplicationTests {
 	}
 	@Test
 	public void testDeletePerson() {
+		logger.info("testDeletePerson()");
 		personController.deletePerson(2l);
 	}
 	
 	@Test
 	public void testEditPerson() {
+		logger.info("testEditPerson()");
 		Person person1 = new Person();
 		person1.setFirstName("Sam");
 		person1.setLastName("Grey");
-		person1 = personController.update(person1);
+		person1 = personController.editPersons(person1);
 		assertEquals(11l, person1.getId());
 		
 	}
 	
 	@Test
 	public void testGetPerson() {
+		logger.info("testGetPerson()");
 		Person person = personController.getperson(3l);
 		assertEquals("Adam", person.getLastName());
 	}
