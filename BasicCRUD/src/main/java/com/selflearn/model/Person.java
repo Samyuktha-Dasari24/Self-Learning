@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  */
 //mark class as an Entity 
 @Entity
-//defining class name as Table name
 @Table(name = "PERSON")
 public class Person {
 //Defining id as primary key
@@ -34,27 +33,6 @@ public class Person {
 	@OneToMany(mappedBy = "person")
 	@JsonManagedReference
 	private Set<Address> addressList = new HashSet<Address>();
-	
-	//Address address;
-
-	/**
-	 * @return the address
-	 */
-//	/*
-//	 * public String getAddress() { String personaddress = null; if(address != null)
-//	 * { personaddress = address.getState() + address.getId() + ", " +
-//	 * address.getPostalCode() + ", " + address.getStreet() + ", " +
-//	 * address.getCity(); }else { personaddress =
-//	 * "There is no address for the person"; } return personaddress; }
-//	 */
-
-	/**
-	 * @param address the address to set
-	 */
-//	public void setAddress(Address address) {
-//		this.address = address;
-//	}
-
 	/**
 	 * @return the id
 	 */
@@ -110,12 +88,7 @@ public class Person {
 	public void setAddressList(Set<Address> addressList) {
 		this.addressList = addressList;
 	}
-	
-	/*
-	 * public boolean addAddress(Address address) { return
-	 * this.addressList.add(address); }
-	 */
-	
+		
 	public boolean removeAddress(Address address) {
 		return this.addressList.remove(address);
 	}
